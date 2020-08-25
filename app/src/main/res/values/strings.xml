@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">مشاوران مسکن فایل</string>
+    <string name="UserName">نام کاربری</string>
+    <string name="Password">رمز عبور</string>
+    <string name="Send">ارسال</string>
+    <string name="RefreshCode">ارسال مجدد کد</string>
+    <string name="Logo_name">مشاوران مسکن فایل</string>
+</resources>
