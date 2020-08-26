@@ -18,7 +18,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.IOException;
 
-public class HmLogin {
+public class AndroidAcceptCodeSend {
 
 	//Primary Variable
 	DatabaseHelper dbh;
@@ -30,18 +30,14 @@ public class HmLogin {
 	private String acceptcode;
 	private String Cookie;
 	private String WsResponse;
-	private String LastMessageCode;
-	private String CityCodeLocation;
 	private boolean CuShowDialog=true;
-	private String[] res;
 
 	//Contractor
-	public HmLogin(Activity activity, String UserName, String acceptcode, String Cookie) {
+	public AndroidAcceptCodeSend(Activity activity, String UserName, String acceptcode, String Cookie) {
 		this.activity = activity;
 		this.UserName = UserName;
 		this.acceptcode=acceptcode;
 		this.Cookie=Cookie;
-		this.CityCodeLocation=CityCodeLocation;
 		IC = new InternetConnection(this.activity.getApplicationContext());
 		PV = new PublicVariable();
 		
@@ -115,40 +111,22 @@ public class HmLogin {
         protected void onPostExecute(String result) {
         	if(result == null)
         	{
-        		res=WsResponse.split("##");
-	            if(res[0].toString().compareTo("ER") == 0)
+	            if(WsResponse.toString().compareTo("ER") == 0)
 	            {
 	            	Toast.makeText(this.activity.getApplicationContext(), "خطا در ارتباط با سرور", Toast.LENGTH_LONG).show();
 	            }
-	            else if(res[0].toString().compareTo("0") == 0)
+	            else if(WsResponse.toString().compareTo("0") == 0)
 	            {
 	            	Toast.makeText(this.activity.getApplicationContext(), "کد اشتباه است", Toast.LENGTH_LONG).show();
 	            }
-	            else if(res[0].toString().compareTo("-2") == 0)//نیروی جدید می باشد و باید اطلاعات اولیه دریافت شود.
+	            else if(WsResponse.toString().compareTo("-1") == 0)//نیروی جدید می باشد و باید اطلاعات اولیه دریافت شود.
 	            {
-//	            	if(check_load.compareTo("0")==0)
-//					{
-//						setloginDeactive();
-//					}
-//					else
-//					{
-						InsertDataFromWsToDb(res);
-//					}
-
+	            	Toast.makeText(this.activity.getApplicationContext(), "این کاربری برروی دستگاه دیگری فعال می باشد!", Toast.LENGTH_LONG).show();
 	            }
-	            else if(res[0].toString().compareTo("-3") == 0)
+	            else
 	            {
-	            	//به صفحه منو برده شود اما امکانات غیرفعال گردد.
-	            	//setloginDeactive();
+					InsertDataFromWsToDb(WsResponse);
 	            }
-				else//;کاربر شناسایی شده و باید به روز رسانی اطلاعات انجام شود
-				{
-					setlogin();
-				}
-        	}
-        	else
-        	{
-        		//Toast.makeText(this.activity, "ط®ط·ط§ ط¯ط± ط§طھطµط§ظ„ ط¨ظ‡ ط³ط±ظˆط±", Toast.LENGTH_SHORT).show();
         	}
             try
             {
@@ -202,7 +180,7 @@ public class HmLogin {
 	    //Set Name
 		pCookiePI.setName("pCookie");
 	    //Set Value
-	    acceptcodePI.setValue(this.Cookie);
+		pCookiePI.setValue(this.Cookie);
 	    //Set dataType
 		pCookiePI.setType(String.class);
 	    //Add the property to request object
@@ -228,92 +206,19 @@ public class HmLogin {
 	    	e.printStackTrace();
 	    }
 	}
-	
-	
-	public void InsertDataFromWsToDb(String[] AllRecord)
+	public void InsertDataFromWsToDb(String AllRecord)
     {
-		//todo
-    }
-	public void setlogin() 
-	{
-		try { if(!db.isOpen()) { db = dbh.getReadableDatabase();}}	catch (Exception ex){	db = dbh.getReadableDatabase();	}
-		Cursor cursors = db.rawQuery("SELECT * FROM login", null);
-		if(cursors.getCount()>0)
-		{
-			cursors.moveToNext();
-			String Result=cursors.getString(cursors.getColumnIndex("islogin"));
-			if(Result.compareTo("0")==0)
-			{
-				if(db.isOpen())
-				{
-					db.close();
-				}
-
-				try { if(!db.isOpen()) { db = dbh.getWritableDatabase();}}	catch (Exception ex){	db = dbh.getWritableDatabase();	}
-
-				db.execSQL("UPDATE login SET karbarCode='"+res[0].toString()+"' , islogin = '1'");
-				if(!cursors.isClosed()) {
-					cursors.close();
-				}
-			}
+		try { if(!db.isOpen()) { db = dbh.getWritableDatabase();}}	catch (Exception ex){	db = dbh.getWritableDatabase();	}
+		String Query  = "UPDATE login SET karbarCode='" + WsResponse + "', islogin='1'";
+		db.execSQL(Query);
 			if(db.isOpen()) {
 				db.close();
 			}
-			if(!cursors.isClosed()) {
-				cursors.close();
-			}
-		}
-		else
-		{
-			if(db.isOpen()) {
-				db.close();
-			}
-			try {
-				if (!db.isOpen()) {
-					db = dbh.getWritableDatabase();
-				}
-			}
-			catch (Exception ex)
-			{
-				db = dbh.getWritableDatabase();
-			}
-			db.execSQL("DELETE FROM login");
-			String query="INSERT INTO login (karbarCode,islogin) VALUES('"+res[0].toString()+"','1')";
-			db.execSQL(query);
-			if(db.isOpen()){db.close();}
-		}
-		try { if(!db.isOpen()) { db = dbh.getReadableDatabase();}}	catch (Exception ex){	db = dbh.getReadableDatabase();	}
-		cursors = db.rawQuery("SELECT ifnull(MAX(CAST (code AS INT)),0)as code FROM messages", null);
-		if(cursors.getCount()>0)
-        {
-			cursors.moveToNext();
-			LastMessageCode=cursors.getString(cursors.getColumnIndex("code"));
-		}
-		if(!cursors.isClosed()) {
-			cursors.close();
-		}
-		if(db.isOpen()) {
-			db.close();
-		}
-//		SyncMessage syncMessage=new SyncMessage(this.activity, res[0].toString(),LastMessageCode);
-//		syncMessage.AsyncExecute();
-//		SyncServices syncservices=new SyncServices(this.activity,res[0].toString(),CityCodeLocation);
-//		syncservices.AsyncExecute();
-
+				LoadActivity(MainActivity.class);
 	}
-	public void LoadActivity(Class<?> Cls, String VariableName, String VariableValue)
+	public void LoadActivity(Class<?> Cls)
 	{
 		Intent intent = new Intent(activity,Cls);
-		intent.putExtra(VariableName, VariableValue);
-
-		activity.startActivity(intent);
-	}
-	public void LoadActivity2(Class<?> Cls, String VariableName, String VariableValue, String VariableName2, String VariableValue2, String VariableName3, String VariableValue3)
-	{
-		Intent intent = new Intent(activity,Cls);
-		intent.putExtra(VariableName, VariableValue);
-		intent.putExtra(VariableName2, VariableValue2);
-		intent.putExtra(VariableName3, VariableValue3);
 		activity.startActivity(intent);
 	}
 }

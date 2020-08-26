@@ -30,13 +30,15 @@ public class SendUserNameAnaPassword {
 	private String Cookie;
 	private String WsResponse;
 	private boolean CuShowDialog=true;
+	private boolean Refresh=false;
 	//Contractor
-	public SendUserNameAnaPassword(Activity activity, String UserName, String Password , String Cookie) {
+	public SendUserNameAnaPassword(Activity activity, String UserName, String Password , String Cookie,boolean Refresh) {
 		this.activity = activity;
 
 		this.UserName=UserName;
 		this.Password=Password;
 		this.Cookie=Cookie;
+		this.Refresh=Refresh;
 		IC = new InternetConnection(this.activity.getApplicationContext());
 		PV = new PublicVariable();
 
@@ -98,9 +100,9 @@ public class SendUserNameAnaPassword {
 	            {
 					Toast.makeText(this.activity.getApplicationContext(), "نام کاربری و یا رمز عبور اشتباه است.", Toast.LENGTH_LONG).show();
 	            }
-				else if(WsResponse.toString().compareTo("-1") == 0)
+				else if(WsResponse.toString().compareTo("-2") == 0)
 				{
-					InsertDataFromWsToDb(WsResponse);
+					Toast.makeText(this.activity.getApplicationContext(), "این کاربری برروی دستگاه دیگری فعال می باشد.", Toast.LENGTH_LONG).show();
 				}
 	            else
 	            {
@@ -213,15 +215,17 @@ public class SendUserNameAnaPassword {
 			throw sqle;
 		}
 		try { if(!db.isOpen()) { db = dbh.getWritableDatabase();}}	catch (Exception ex){	db = dbh.getWritableDatabase();	}	try { if(!db.isOpen()) { db = dbh.getWritableDatabase();}}	catch (Exception ex){	db = dbh.getWritableDatabase();	}
-		String spStrWsResponse[] =  WsResponse.split("[##]");
+		String spStrWsResponse[] =  WsResponse.split("\\[##\\]");
 		if(spStrWsResponse[0].compareTo("-1") == 0) {
-			db.execSQL("UPDATE login SET karbarCode='" + spStrWsResponse[1] + "' , islogin = '1'");
+			db.execSQL("UPDATE login SET Cookie='" + spStrWsResponse[1] + "' , Phone = '" + UserName + "'");
 		}
 		if(db.isOpen())
 		{
 			db.close();
 		}
-		LoadActivity(Accept_code.class,"UserName",spStrWsResponse[1]);
+		if(!Refresh) {
+			LoadActivity(Accept_code.class, "UserName", UserName);
+		}
 	}
 	public void LoadActivity(Class<?> Cls, String VariableName, String VariableValue)
 	{

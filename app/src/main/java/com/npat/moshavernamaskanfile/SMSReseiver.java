@@ -34,7 +34,7 @@ public class SMSReseiver extends BroadcastReceiver {
                             if (msg_from.compareTo(PV.Recive_NumberPhone)==0 ) {
                                 messageBody = msgs[i].getMessageBody();
                                 StrAccept = messageBody.split(":");
-                                StrAccept[1] = StrAccept[1].trim();
+                                StrAccept[1] = StrAccept[1].replace("مسکن فایل","").trim();
 //                                if (StrAccept[0].compareTo("آسپينو كاربر ") == 0) {
                                     mListener.onMessageReceived(StrAccept[1]);
 //                                }

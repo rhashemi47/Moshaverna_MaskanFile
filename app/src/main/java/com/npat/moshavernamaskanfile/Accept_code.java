@@ -10,8 +10,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,14 +27,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Accept_code extends Activity {
-	private String phonenumber;
-	private String check_load;
 	private Handler mHandler;
 	boolean continue_or_stop = true;
 	boolean createthread=true;
@@ -48,9 +42,10 @@ public class Accept_code extends Activity {
 	private DatabaseHelper dbh;
 	private SQLiteDatabase db;
 	private IntentFilter intentFilter;
-	private int counter=0;
+	private int counter=59;
 	private String UserName;
 	private String Cookie="";
+	private String Password="";
 
 	private BroadcastReceiver intentReciever=new BroadcastReceiver() {
             @Override
@@ -68,15 +63,6 @@ public class Accept_code extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accept_code);
-		try
-		{
-
-			phonenumber = getIntent().getStringExtra("phonenumber");
-		}
-		catch (Exception ex)
-		{
-			phonenumber="0";
-		}
 		try
 		{
 
@@ -129,7 +115,7 @@ public class Accept_code extends Activity {
 		tvRefreshCode=(TextView) findViewById(R.id.tvRefreshCode);
 		tvTimer=(TextView) findViewById(R.id.tvTimer);
 		tvPhoneNumber=(TextView) findViewById(R.id.tvPhoneNumber);
-		tvPhoneNumber.setText(phonenumber + "ارسال خواهد شد");
+		tvPhoneNumber.setText(UserName + "ارسال خواهد شد");
 		//set font for element
 //		acceptcode.setTypeface(FontMitra);
 		//Start Counter Second
@@ -155,32 +141,50 @@ public class Accept_code extends Activity {
 		tvRefreshCode.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String query=null;
-				try { if(!db.isOpen()) { try { if(!db.isOpen()) { db = dbh.getReadableDatabase();}}	catch (Exception ex){	db = dbh.getReadableDatabase();	}}}	catch (Exception ex){	 db = dbh.getReadableDatabase();}
-				query="SELECT * FROM Profile";
-				Cursor coursors = db.rawQuery(query,null);
-				if(coursors.getCount()>0)
+				try
 				{
-					coursors.moveToNext();
-					String Mobile;
-					Mobile=coursors.getString(coursors.getColumnIndex("Mobile"));
-					acceptcode.setText("");
-					SendAcceptCode sendCode=new SendAcceptCode(Accept_code.this,Mobile,check_load);
-					sendCode.AsyncExecute();
-					if(!coursors.isClosed()) {
-						coursors.close();
+					if(!db.isOpen())
+					{
+						db = dbh.getReadableDatabase();
 					}
-					if(db.isOpen()) {
-					db.close();
 				}
+				catch (Exception ex)
+				{
+					db = dbh.getReadableDatabase();
 				}
-				if(!coursors.isClosed()) {
-					coursors.close();
-				}
-				if(db.isOpen()) {
-					db.close();
+				Cursor cursor = db.rawQuery("SELECT * FROM Login", null);
+				if (cursor.getCount() > 0) {
+					cursor.moveToNext();
+					Cookie = cursor.getString(cursor.getColumnIndex("Cookie"));
+					Password = cursor.getString(cursor.getColumnIndex("Password"));
+					if (Cookie.compareTo("0") == 0 || Password.compareTo("0") == 0) {
+						Cookie = "";
+						Password = "";
+						if (!cursor.isClosed()) {
+							cursor.close();
+						}
+
+						if (db.isOpen()) {
+							db.close();
+						}
+
+						SendUserNameAnaPassword sendUserNameAnaPassword = new SendUserNameAnaPassword(Accept_code.this, UserName, Password, Cookie, true);
+						sendUserNameAnaPassword.AsyncExecute();
+					} else {
+						if (!cursor.isClosed()) {
+							cursor.close();
+						}
+
+						if (db.isOpen()) {
+							db.close();
+						}
+						SendUserNameAnaPassword sendUserNameAnaPassword = new SendUserNameAnaPassword(Accept_code.this, UserName, Password, Cookie, true);
+						sendUserNameAnaPassword.AsyncExecute();
+					}
 				}
 
+				counter=59;
+				startCountAnimation();
 			}
 		});
 		SMSReseiver.bindListener(new SmsListener() {
@@ -204,10 +208,10 @@ public class Accept_code extends Activity {
 	}
 	public void LoadActivity(Class<?> Cls, String VariableName, String VariableValue)
 	{
-		/*if(intentReciever.isOrderedBroadcast())
+		if(intentReciever.isOrderedBroadcast())
 		{
 			intentReciever.abortBroadcast();
-		}*/
+		}
 		Intent intent = new Intent(getApplicationContext(),Cls);
 		intent.putExtra(VariableName, VariableValue);
 		Accept_code.this.startActivity(intent);
@@ -226,16 +230,35 @@ public class Accept_code extends Activity {
 	}
 	public void Send_AcceptCode()
 	{
-		/*if(intentReciever.isOrderedBroadcast())
+		if(intentReciever.isOrderedBroadcast())
 		{
 			intentReciever.abortBroadcast();
-		}*/
-//		countDownTimer.cancel();
-		String query="UPDATE login SET Phone ='"+phonenumber+"', AcceptCode='"+acceptcode.getText().toString()+"'";
-		try { if(!db.isOpen()) { db=dbh.getWritableDatabase();}}	catch (Exception ex){	db=dbh.getWritableDatabase();	}
-		db.execSQL(query);if(db.isOpen()){db.close();}
-		HmLogin hm=new HmLogin(Accept_code.this, UserName, acceptcode.getText().toString(),Cookie);
-		hm.AsyncExecute();
+		}
+		try
+		{
+			if(!db.isOpen())
+			{
+				db = dbh.getReadableDatabase();
+			}
+		}
+		catch (Exception ex)
+		{
+			db = dbh.getReadableDatabase();
+		}
+		Cursor cursor = db.rawQuery("SELECT * FROM Login", null);
+		if (cursor.getCount() > 0) {
+			cursor.moveToNext();
+			Cookie = cursor.getString(cursor.getColumnIndex("Cookie"));
+			if (!cursor.isClosed()) {
+				cursor.close();
+			}
+
+			if (db.isOpen()) {
+				db.close();
+			}
+			AndroidAcceptCodeSend androidAcceptCodeSend = new AndroidAcceptCodeSend(Accept_code.this, UserName, acceptcode.getText().toString(), Cookie);
+			androidAcceptCodeSend.AsyncExecute();
+		}
 	}
 
 	public void startCountAnimation() {
@@ -260,11 +283,13 @@ public class Accept_code extends Activity {
 										else
 										{
 											continue_or_stop = false;
+											createthread = true;
 											tvRefreshCode.setVisibility(View.VISIBLE);
 										}
 								}
 							});
 						} catch (Exception e) {
+							throw new Error("Unable to run counter");
 						}
 					}
 				}
@@ -276,8 +301,7 @@ public class Accept_code extends Activity {
 	}
 	public void onDestroy() {
 		super.onDestroy();
-		// Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
-		//intentReciever.abortBroadcast();
+		intentReciever.abortBroadcast();
 		continue_or_stop=false;
 	}
 }

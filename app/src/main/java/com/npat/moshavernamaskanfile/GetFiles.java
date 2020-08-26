@@ -17,7 +17,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.IOException;
 
-public class SendAcceptCode {
+public class GetFiles {
 
 	//Primary Variable
 	DatabaseHelper dbh;
@@ -25,39 +25,24 @@ public class SendAcceptCode {
 	PublicVariable PV;
     InternetConnection IC;
 	private Activity activity;
-	private String phonenumber;
-	private String check_load;
+
+	private String StartPage;
+	private String EndPage;
+	private String WhereStr;
 	private String WsResponse;
 	private boolean CuShowDialog=true;
+	private boolean Refresh=false;
 	//Contractor
-	public SendAcceptCode(Activity activity, String phonenumber, String check_load) {
+	public GetFiles(Activity activity, String StartPage, String EndPage , String WhereStr) {
 		this.activity = activity;
-		this.phonenumber = phonenumber;		
-		this.check_load = check_load;
+
+		this.StartPage=StartPage;
+		this.EndPage=EndPage;
+		this.WhereStr=WhereStr;
+		this.Refresh=Refresh;
 		IC = new InternetConnection(this.activity.getApplicationContext());
 		PV = new PublicVariable();
-		
-		dbh=new DatabaseHelper(this.activity.getApplicationContext());
-		try {
 
-			dbh.createDataBase();
-
-   		} catch (IOException ioe) {
-
-   			throw new Error("Unable to create database");
-
-   		}
-
-   		try {
-
-   			dbh.openDataBase();
-
-   		} catch (SQLException sqle) {
-
-   			throw sqle;
-   		}
-   		
-   		
 	}
 	
 	public void AsyncExecute()
@@ -66,12 +51,11 @@ public class SendAcceptCode {
 		{
 			try
 			{
-								
 				AsyncCallWS task = new AsyncCallWS(this.activity);
 				task.execute();
 			}	
 			 catch (Exception e) {
-				//Toast.makeText(this.activity.getApplicationContext(), PersianReshape.reshape("ط¹ط¯ظ… ط¯ط³طھط±ط³غŒ ط¨ظ‡ ط³ط±ظˆط±"), Toast.LENGTH_SHORT).show();
+
 	            e.printStackTrace();
 			 }
 		}
@@ -88,7 +72,8 @@ public class SendAcceptCode {
 		
 		public AsyncCallWS(Activity activity) {
 		    this.activity = activity;
-		    this.dialog = new ProgressDialog(activity);		    this.dialog.setCanceledOnTouchOutside(false);
+		    this.dialog = new ProgressDialog(activity);
+		    this.dialog.setCanceledOnTouchOutside(false);
 		}
 		
         @Override
@@ -96,7 +81,7 @@ public class SendAcceptCode {
         	String result = null;
         	try
         	{
-        		CallWsMethod("SendAcceptCode");
+        		CallWsMethod("AndroidGetFile");
         	}
 	    	catch (Exception e) {
 	    		result = e.getMessage().toString();
@@ -114,11 +99,15 @@ public class SendAcceptCode {
 	            }
 	            else if(WsResponse.toString().compareTo("0") == 0)
 	            {
-	            	Toast.makeText(this.activity.getApplicationContext(), "خطا در ارتباط با سرور", Toast.LENGTH_LONG).show();
+					Toast.makeText(this.activity.getApplicationContext(), "نام کاربری و یا رمز عبور اشتباه است.", Toast.LENGTH_LONG).show();
 	            }
+				else if(WsResponse.toString().compareTo("-2") == 0)
+				{
+					Toast.makeText(this.activity.getApplicationContext(), "این کاربری برروی دستگاه دیگری فعال می باشد.", Toast.LENGTH_LONG).show();
+				}
 	            else
 	            {
-					InsertDataFromWsToDb(WsResponse);
+	            	InsertDataFromWsToDb(WsResponse);
 	            }
         	}
         	else
@@ -148,19 +137,40 @@ public class SendAcceptCode {
         }
         
     }
-
+	
 	public void CallWsMethod(String METHOD_NAME) {
 	    //Create request
 	    SoapObject request = new SoapObject(PV.NAMESPACE, METHOD_NAME);
-	    PropertyInfo UserPI = new PropertyInfo();
-	    //Set Name
-	    UserPI.setName("PhoneNumber");
-	    //Set Value
-	    UserPI.setValue(this.phonenumber);
-	    //Set dataType
-	    UserPI.setType(String.class);
-	    //Add the property to request object
-	    request.addProperty(UserPI);	    
+	    //*****************************************************
+		PropertyInfo StartPagePI = new PropertyInfo();
+		//Set Name
+		StartPagePI.setName("StartPage");
+		//Set Value
+		StartPagePI.setValue(this.StartPage);
+		//Set dataType
+		StartPagePI.setType(String.class);
+		//Add the property to request object
+		request.addProperty(StartPagePI);
+		//*****************************************************
+		PropertyInfo EndPagePI = new PropertyInfo();
+		//Set Name
+		EndPagePI.setName("EndPage");
+		//Set Value
+		EndPagePI.setValue(this.EndPage);
+		//Set dataType
+		EndPagePI.setType(String.class);
+		//Add the property to request object
+		request.addProperty(EndPagePI);
+		//*****************************************************
+		PropertyInfo WhereStrPI = new PropertyInfo();
+		//Set Name
+		WhereStrPI.setName("WhereStr");
+		//Set Value
+		WhereStrPI.setValue(this.WhereStr);
+		//Set dataType
+		WhereStrPI.setType(String.class);
+		//Add the property to request object
+		request.addProperty(WhereStrPI);
 	    //Create envelope
 	    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 	            SoapEnvelope.VER11);
@@ -185,17 +195,13 @@ public class SendAcceptCode {
 	
 	
 	public void InsertDataFromWsToDb(String AllRecord)
-    {		
-       LoadActivity(Accept_code.class, "phonenumber", phonenumber,"check_load",check_load);
-    }
-	
-
-	public void LoadActivity(Class<?> Cls, String VariableName, String VariableValue, String VariableName2, String VariableValue2)
+    {
+		LoadActivity(Accept_code.class, "StrFiles", WsResponse);
+	}
+	public void LoadActivity(Class<?> Cls, String VariableName, String VariableValue)
 	{
 		Intent intent = new Intent(activity,Cls);
 		intent.putExtra(VariableName, VariableValue);
-		intent.putExtra(VariableName2, VariableValue2);
 		activity.startActivity(intent);
 	}
-	
 }
