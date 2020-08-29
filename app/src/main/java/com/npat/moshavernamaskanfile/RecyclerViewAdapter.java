@@ -30,8 +30,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.txtID.setText(String.valueOf(filesList.get(position).getId()));
-        holder.txtContent.setText(filesList.get(position).getContent());
+        holder.txtID.setText(String.valueOf(filesList.get(position).getCodeFile()));
+        holder.txtDateFile.setText(filesList.get(position).getCalendarOrder());
+        holder.txtTypeFile.setText(filesList.get(position).getBuilding_Type());
+        holder.txtCurrncyTitle.setText(filesList.get(position).getCurrency_Title());
+        holder.txtCurrncy.setText(filesList.get(position).getCurrency());
+        holder.txtAddress.setText(filesList.get(position).getAddress());
+        holder.txtDocument.setText(filesList.get(position).getDocument());
+        holder.txtTime.setText(filesList.get(position).getTime());
     }
 
     @Override
@@ -40,11 +46,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
-        TextView txtID,txtContent;
+        TextView txtID,txtDateFile,txtTypeFile,txtCurrncyTitle,txtCurrncy,txtAddress,txtDocument,txtTime;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             txtID=(TextView) itemView.findViewById(R.id.txtID);
-            txtContent=(TextView) itemView.findViewById(R.id.txtContent);
+            txtDateFile=(TextView) itemView.findViewById(R.id.txtDateFile);
+            txtTypeFile=(TextView) itemView.findViewById(R.id.txtTypeFile);
+            txtCurrncyTitle=(TextView) itemView.findViewById(R.id.txtCurrncyTitle);
+            txtCurrncy=(TextView) itemView.findViewById(R.id.txtCurrncy);
+            txtAddress=(TextView) itemView.findViewById(R.id.txtAddress);
+            txtDocument=(TextView) itemView.findViewById(R.id.txtDocument);
+            txtTime=(TextView) itemView.findViewById(R.id.txtTime);
         }
     }
 }
