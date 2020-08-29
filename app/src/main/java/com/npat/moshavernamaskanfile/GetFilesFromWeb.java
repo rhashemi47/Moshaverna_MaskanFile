@@ -17,7 +17,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.IOException;
 
-public class GetFiles {
+public class GetFilesFromWeb {
 
 	//Primary Variable
 	DatabaseHelper dbh;
@@ -33,7 +33,7 @@ public class GetFiles {
 	private boolean CuShowDialog=true;
 	private boolean Refresh=false;
 	//Contractor
-	public GetFiles(Activity activity, String StartPage, String EndPage , String WhereStr) {
+	public GetFilesFromWeb(Activity activity, String StartPage, String EndPage , String WhereStr) {
 		this.activity = activity;
 
 		this.StartPage=StartPage;
@@ -196,7 +196,7 @@ public class GetFiles {
 	
 	public void InsertDataFromWsToDb(String AllRecord)
     {
-		LoadActivity(Accept_code.class, "StrFiles", WsResponse);
+		LoadActivity(MainActivity.class, "StrFiles", WsResponse);
 	}
 	public void LoadActivity(Class<?> Cls, String VariableName, String VariableValue)
 	{

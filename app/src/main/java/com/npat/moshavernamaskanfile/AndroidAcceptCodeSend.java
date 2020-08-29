@@ -214,7 +214,8 @@ public class AndroidAcceptCodeSend {
 			if(db.isOpen()) {
 				db.close();
 			}
-				LoadActivity(MainActivity.class);
+				GetFilesFromWeb getFilesFromWeb=new GetFilesFromWeb(activity,"0","100","");
+			getFilesFromWeb.AsyncExecute();
 	}
 	public void LoadActivity(Class<?> Cls)
 	{

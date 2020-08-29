@@ -88,7 +88,8 @@ public class Login extends AppCompatActivity {
                 if(db.isOpen()) {
                     db.close();
                 }
-                LoadActivity(MainActivity.class);
+                GetFilesFromWeb getFilesFromWeb=new GetFilesFromWeb(Login.this,"0","100","");
+                getFilesFromWeb.AsyncExecute();
             }
 
         }
