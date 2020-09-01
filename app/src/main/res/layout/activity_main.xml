@@ -8,6 +8,24 @@
     tools:context=".MainActivity"
     app:cardBackgroundColor="@color/bg">
 
+<androidx.drawerlayout.widget.DrawerLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="end"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.drawerlayout.widget.DrawerLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_file"
         android:layout_width="match_parent"

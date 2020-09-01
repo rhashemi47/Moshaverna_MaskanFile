@@ -21,7 +21,7 @@ public class Files {
     private String Cupboards;//کابینت
     private String Ability_to_exchange;//قابلیت معاوضه
     private String Building_direction;//جهت ملک
-    private String description;//توضیحات ملک
+    private String Description;//توضیحات ملک
     private String Currency_Title;//نوع معامله
     private String Currency;//مبلغ
     private String Time;//سال ساخت
@@ -46,15 +46,14 @@ public class Files {
         Cupboards = cupboards;
         Ability_to_exchange = ability_to_exchange;
         Building_direction = building_direction;
-        this.description = description;
+        Description = description;
         Currency_Title = currency_Title;
         Currency = currency;
         Time = time;
         Document = document;
     }
 
-    public Files(String s, int i) {
-    }
+
 
     public String getCodeFile() {
         return CodeFile;
@@ -201,11 +200,11 @@ public class Files {
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        Description = description;
     }
 
     public String getCurrency_Title() {

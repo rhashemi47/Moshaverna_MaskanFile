@@ -63,6 +63,7 @@ public class Login extends AppCompatActivity {
         {
             db = dbh.getReadableDatabase();
         }
+
         Cursor cursor = db.rawQuery("SELECT * FROM Login", null);
         if (cursor.getCount() > 0) {
             cursor.moveToNext();
@@ -78,6 +79,8 @@ public class Login extends AppCompatActivity {
                 if(db.isOpen()) {
                     db.close();
                 }
+                GetFilesFromWeb getFilesFromWeb=new GetFilesFromWeb(Login.this,"0","100","");
+                getFilesFromWeb.AsyncExecute();
             }
             else
             {
