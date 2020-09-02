@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,14 +31,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.txtID.setText(String.valueOf(filesList.get(position).getCodeFile()));
-        holder.txtDateFile.setText(filesList.get(position).getCalendarOrder());
-        holder.txtTypeFile.setText(filesList.get(position).getBuilding_Type());
-        holder.txtCurrncyTitle.setText(filesList.get(position).getCurrency_Title());
-        holder.txtCurrncy.setText(filesList.get(position).getCurrency());
+        holder.txtCode.setText(String.valueOf(filesList.get(position).getCodeFile()));
+        holder.txtCreated.setText(filesList.get(position).getCreated());
+        holder.txtType.setText(filesList.get(position).getType());
+        holder.txtSellTitle.setText("فروش");
+        holder.txtCurrncySell.setText(filesList.get(position).getPriceSell());
+        holder.txtMortgageTitle.setText("رهن");
+        holder.txtCurrncyMortgage.setText(filesList.get(position).getPriceMortgage());
+        holder.txtRentTitle.setText("اجاره");
+        holder.txtCurrncyMortgage.setText(filesList.get(position).getPriceRent());
         holder.txtAddress.setText(filesList.get(position).getAddress());
-        holder.txtDocument.setText(filesList.get(position).getDocument());
-        holder.txtTime.setText(filesList.get(position).getTime());
+        holder.txtDocument.setText(filesList.get(position).getDocType());
+        holder.txtTime.setText(filesList.get(position).getYear());
+        holder.txtAmlakFileStatus.setText(filesList.get(position).getAmlakFileStatus());
     }
 
     @Override
@@ -46,17 +52,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
-        TextView txtID,txtDateFile,txtTypeFile,txtCurrncyTitle,txtCurrncy,txtAddress,txtDocument,txtTime;
+        TextView txtCode,txtCreated,txtType,txtSellTitle,txtCurrncySell,txtMortgageTitle,txtCurrncyMortgage,txtRentTitle,txtCurrncyRent,txtAddress,txtDocument,txtTime,txtAmlakFileStatus;
+        LinearLayout LinearSell,LinearMortgage,LinearRent;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            txtID=(TextView) itemView.findViewById(R.id.txtID);
-            txtDateFile=(TextView) itemView.findViewById(R.id.txtDateFile);
-            txtTypeFile=(TextView) itemView.findViewById(R.id.txtTypeFile);
-            txtCurrncyTitle=(TextView) itemView.findViewById(R.id.txtCurrncyTitle);
-            txtCurrncy=(TextView) itemView.findViewById(R.id.txtCurrncy);
+            txtCode=(TextView) itemView.findViewById(R.id.txtCode);
+            txtCreated=(TextView) itemView.findViewById(R.id.txtCreated);
+            txtType=(TextView) itemView.findViewById(R.id.txtType);
+            txtSellTitle=(TextView) itemView.findViewById(R.id.txtSellTitle);
+            txtCurrncySell=(TextView) itemView.findViewById(R.id.txtCurrncySell);
             txtAddress=(TextView) itemView.findViewById(R.id.txtAddress);
             txtDocument=(TextView) itemView.findViewById(R.id.txtDocument);
             txtTime=(TextView) itemView.findViewById(R.id.txtTime);
+            txtMortgageTitle=(TextView) itemView.findViewById(R.id.txtMortgageTitle);
+            txtCurrncyMortgage=(TextView) itemView.findViewById(R.id.txtCurrncyMortgage);
+            txtRentTitle=(TextView) itemView.findViewById(R.id.txtRentTitle);
+            txtCurrncyRent=(TextView) itemView.findViewById(R.id.txtCurrncyRent);
+            txtAmlakFileStatus=(TextView) itemView.findViewById(R.id.txtAmlakFileStatus);
+            LinearSell=(LinearLayout) itemView.findViewById(R.id.LinearSell);
+            LinearMortgage=(LinearLayout) itemView.findViewById(R.id.LinearMortgage);
+            LinearRent=(LinearLayout) itemView.findViewById(R.id.LinearRent);
         }
     }
 }

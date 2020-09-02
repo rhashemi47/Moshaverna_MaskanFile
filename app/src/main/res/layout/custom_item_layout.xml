@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="5dp"
@@ -9,12 +9,12 @@
     android:layout_margin="8dp"
     android:layoutDirection="rtl">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/txtID"
+            android:id="@+id/txtCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/code_file"
@@ -22,13 +22,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="کدفایل"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:textSize="16sp" />
         <TextView
-            android:id="@+id/txtDateFile"
+            android:id="@+id/txtCreated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -37,16 +33,9 @@
             android:drawableStart="@drawable/date_file"
             android:drawablePadding="8dp"
             android:text="تاریخ ثبت فایل"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtID"
-            app:layout_constraintVertical_bias="0.0" />
-
+            android:textSize="16sp"/>
         <TextView
-            android:id="@+id/txtTypeFile"
+            android:id="@+id/txtType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/type_file"
@@ -55,16 +44,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:text="نوع فایل"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDateFile"
-            app:layout_constraintVertical_bias="0.0" />
-
-                <LinearLayout
-                    android:id="@+id/LinearCurrncy"
+            android:textSize="16sp"/>
+            <LinearLayout
+                    android:id="@+id/LinearSell"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -72,27 +54,85 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/currency_file"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtTypeFile"
-                    app:layout_constraintVertical_bias="0.0">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtCurrncyTitle"
+                        android:id="@+id/txtSellTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="فروش"
+                        android:text="@string/sell"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/txtCurrncy"
+                        android:id="@+id/txtCurrncySell"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="1400000"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/LinearMortgage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/currency_file"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtMortgageTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="@string/mortgage"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txtCurrncyMortgage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="1400000"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/LinearRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/currency_file"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtRentTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="@string/rent"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txtCurrncyRent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -112,14 +152,8 @@
                     android:layout_marginBottom="8dp"
                     android:drawableStart="@drawable/document"
                     android:drawablePadding="8dp"
-                    android:text="آدرس"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/LinearCurrncy"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:text="@string/address"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtDocument"
@@ -131,14 +165,8 @@
                     android:layout_marginBottom="8dp"
                     android:drawableStart="@drawable/document"
                     android:drawablePadding="8dp"
-                    android:text="سند"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtAddress"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:text="@string/document"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtTime"
@@ -150,14 +178,18 @@
                     android:layout_marginBottom="8dp"
                     android:drawableStart="@drawable/time"
                     android:drawablePadding="8dp"
-                    android:text="سال ساخت"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtDocument"
-                    app:layout_constraintVertical_bias="0.0" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+                    android:text="@string/create_year"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/txtAmlakFileStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/document"
+                    android:drawablePadding="8dp"
+                    android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

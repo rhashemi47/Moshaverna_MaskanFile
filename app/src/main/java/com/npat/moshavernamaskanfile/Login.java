@@ -102,8 +102,8 @@ public class Login extends AppCompatActivity {
                 String UserName = etUserName.getText().toString();
                 String Password = etPassword.getText().toString();
 
-                SendUserNameAnaPassword sendUserNameAnaPassword =new SendUserNameAnaPassword(Login.this,UserName,Password,Cookie,false);
-                sendUserNameAnaPassword.AsyncExecute();
+                SendUserNameAndPassword sendUserNameAndPassword =new SendUserNameAndPassword(Login.this,UserName,Password,Cookie,false);
+                sendUserNameAndPassword.AsyncExecute();
             }
         });
     }

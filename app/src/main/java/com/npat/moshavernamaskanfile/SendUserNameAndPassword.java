@@ -16,7 +16,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.IOException;
 
-public class SendUserNameAnaPassword {
+public class SendUserNameAndPassword {
 
 	//Primary Variable
 	DatabaseHelper dbh;
@@ -32,7 +32,7 @@ public class SendUserNameAnaPassword {
 	private boolean CuShowDialog=true;
 	private boolean Refresh=false;
 	//Contractor
-	public SendUserNameAnaPassword(Activity activity, String UserName, String Password , String Cookie,boolean Refresh) {
+	public SendUserNameAndPassword(Activity activity, String UserName, String Password , String Cookie, boolean Refresh) {
 		this.activity = activity;
 
 		this.UserName=UserName;

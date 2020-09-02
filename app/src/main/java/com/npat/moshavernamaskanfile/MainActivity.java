@@ -45,29 +45,25 @@ public class MainActivity extends AppCompatActivity {
             String spDetailFile[] = spFile[i].split("\\[#\\]");
             int CountSpDetailFile = spDetailFile.length;
             if (CountSpDetailFile > 0) {
-                files.add(new Files(spDetailFile[CountSpDetailFile-17],
-                        spDetailFile[CountSpDetailFile-16],
-                        spDetailFile[CountSpDetailFile-15],
-                        spDetailFile[CountSpDetailFile-14],
-                        spDetailFile[CountSpDetailFile-13],
-                        spDetailFile[CountSpDetailFile-12],
-                        spDetailFile[CountSpDetailFile-11],
-                        spDetailFile[CountSpDetailFile-10],
-                        spDetailFile[CountSpDetailFile-9],
-                        spDetailFile[CountSpDetailFile-8],
-                        spDetailFile[CountSpDetailFile-7],
-                        spDetailFile[CountSpDetailFile-6],
-                        spDetailFile[CountSpDetailFile-5],
-                        spDetailFile[CountSpDetailFile-4],
-                        spDetailFile[CountSpDetailFile-3],
-                        spDetailFile[CountSpDetailFile-2],
-                        spDetailFile[CountSpDetailFile-1],
-                        spDetailFile[CountSpDetailFile-1],
-                        spDetailFile[CountSpDetailFile-1],
-                        spDetailFile[CountSpDetailFile-1],
-                        spDetailFile[CountSpDetailFile-1],
-                        spDetailFile[CountSpDetailFile-1],
-                        spDetailFile[CountSpDetailFile-1]));
+                files.add(new Files(spDetailFile[0]
+                        ,spDetailFile[1]
+                        ,spDetailFile[2]
+                        ,spDetailFile[3]
+                        ,spDetailFile[4]
+                        ,spDetailFile[5]
+                        ,spDetailFile[6]
+                        ,spDetailFile[7]
+                        ,spDetailFile[8]
+                        ,spDetailFile[9]
+                        ,spDetailFile[10]
+                        ,spDetailFile[11]
+                        ,spDetailFile[12]
+                        ,spDetailFile[13]
+                        ,spDetailFile[14]
+                        ,spDetailFile[15]
+                        ,spDetailFile[16]
+                        ,spDetailFile[17]
+                        ,spDetailFile[18]));
             }
         }
         return files;

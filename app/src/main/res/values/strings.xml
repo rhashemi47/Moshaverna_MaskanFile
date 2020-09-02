@@ -5,4 +5,10 @@
     <string name="Send">ارسال</string>
     <string name="RefreshCode">ارسال مجدد کد</string>
     <string name="Logo_name">مشاوران مسکن فایل</string>
+    <string name="sell">فروش</string>
+    <string name="mortgage">رهن</string>
+    <string name="rent">اجاره</string>
+    <string name="address">آدرس</string>
+    <string name="document">سند</string>
+    <string name="create_year">سال ساخت</string>
 </resources>

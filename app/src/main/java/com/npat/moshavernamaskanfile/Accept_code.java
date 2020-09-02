@@ -168,8 +168,8 @@ public class Accept_code extends Activity {
 							db.close();
 						}
 
-						SendUserNameAnaPassword sendUserNameAnaPassword = new SendUserNameAnaPassword(Accept_code.this, UserName, Password, Cookie, true);
-						sendUserNameAnaPassword.AsyncExecute();
+						SendUserNameAndPassword sendUserNameAndPassword = new SendUserNameAndPassword(Accept_code.this, UserName, Password, Cookie, true);
+						sendUserNameAndPassword.AsyncExecute();
 					} else {
 						if (!cursor.isClosed()) {
 							cursor.close();
@@ -178,8 +178,8 @@ public class Accept_code extends Activity {
 						if (db.isOpen()) {
 							db.close();
 						}
-						SendUserNameAnaPassword sendUserNameAnaPassword = new SendUserNameAnaPassword(Accept_code.this, UserName, Password, Cookie, true);
-						sendUserNameAnaPassword.AsyncExecute();
+						SendUserNameAndPassword sendUserNameAndPassword = new SendUserNameAndPassword(Accept_code.this, UserName, Password, Cookie, true);
+						sendUserNameAndPassword.AsyncExecute();
 					}
 				}
 
