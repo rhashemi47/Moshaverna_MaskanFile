@@ -11,4 +11,7 @@
     <string name="address">آدرس</string>
     <string name="document">سند</string>
     <string name="create_year">سال ساخت</string>
+    <string name="CodeFile">کدفایل</string>
+    <string name="CreateDateFile">تاریخ ثبت فایل</string>
+    <string name="TypeFile">نوع فایل</string>
 </resources>
