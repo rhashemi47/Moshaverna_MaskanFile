@@ -10,11 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+
 public class Splash extends AppCompatActivity {
-	@Override
-	protected void attachBaseContext(Context newBase) {
-		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-	}
+//	@Override
+//	protected void attachBaseContext(Context newBase) {
+//		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+//	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

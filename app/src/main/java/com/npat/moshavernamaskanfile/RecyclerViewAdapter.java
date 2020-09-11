@@ -2,6 +2,7 @@ package com.npat.moshavernamaskanfile;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.viewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.viewHolder> implements InterfaceDataModelFiles {
     List<Files> filesList;
     Context  context;
 
@@ -31,19 +32,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.txtCode.setText(String.valueOf(filesList.get(position).getCodeFile()));
-        holder.txtCreated.setText(filesList.get(position).getCreated());
-        holder.txtType.setText(filesList.get(position).getType());
-        holder.txtSellTitle.setText("فروش");
-        holder.txtCurrncySell.setText(filesList.get(position).getPriceSell());
-        holder.txtMortgageTitle.setText("رهن");
-        holder.txtCurrncyMortgage.setText(filesList.get(position).getPriceMortgage());
-        holder.txtRentTitle.setText("اجاره");
-        holder.txtCurrncyMortgage.setText(filesList.get(position).getPriceRent());
-        holder.txtAddress.setText(filesList.get(position).getAddress());
-        holder.txtDocument.setText(filesList.get(position).getDocType());
-        holder.txtTime.setText(filesList.get(position).getYear());
-        holder.txtAmlakFileStatus.setText(filesList.get(position).getAmlakFileStatus());
+        final Files file_object = filesList.get(position);
+        holder.txtCode.setText(String.valueOf(file_object.getCodeFile()));
+        holder.txtCreated.setText(file_object.getCreated());
+        holder.txtType.setText(file_object.getType());
+        if (file_object.getType().compareTo("رهن و اجاره") == 0) {
+            holder.LinearMortgage.setVisibility(View.VISIBLE);
+            holder.LinearRent.setVisibility(View.VISIBLE);
+            holder.LinearSell.setVisibility(View.GONE);
+            holder.txtMortgageTitle.setText("رهن");
+            holder.txtRentTitle.setText("اجاره");
+            holder.txtCurrncyMortgage.setText(file_object.getPriceMortgage());
+            holder.txtCurrncyMortgage.setText(file_object.getPriceRent());
+        }
+        else {
+            holder.LinearMortgage.setVisibility(View.GONE);
+            holder.LinearRent.setVisibility(View.GONE);
+            holder.LinearSell.setVisibility(View.VISIBLE);
+            holder.txtSellTitle.setText("فروش");
+            holder.txtCurrncySell.setText(file_object.getPriceSell());
+        }
+        holder.txtAddress.setText(file_object.getAddress());
+        holder.txtDocument.setText(file_object.getDocType());
+        holder.txtTime.setText(file_object.getYear()+ "سال ساخت");
+        holder.txtAmlakFileStatus.setText(file_object.getAmlakFileStatus());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,ShowFile.class);
+                intent.putExtra(CodeFile_InterFace,String.valueOf(file_object.getCodeFile()));
+                intent.putExtra(Created_InterFace,file_object.getCreated());
+                intent.putExtra(Type_InterFace,file_object.getType());
+                intent.putExtra(PriceSell_InterFace,file_object.getPriceSell());
+                intent.putExtra(PriceMortgage_InterFace,file_object.getPriceMortgage());
+                intent.putExtra(PriceRent_InterFace,file_object.getPriceRent());
+                intent.putExtra(Address_InterFace,file_object.getAddress());
+                intent.putExtra(DocType_InterFace,file_object.getDocType());
+                intent.putExtra(Year_InterFace,file_object.getYear());
+                intent.putExtra(AmlakFileStatus_InterFace,file_object.getAmlakFileStatus());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

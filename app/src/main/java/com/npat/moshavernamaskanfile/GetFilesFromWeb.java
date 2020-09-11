@@ -39,7 +39,6 @@ public class GetFilesFromWeb {
 		this.StartPage=StartPage;
 		this.EndPage=EndPage;
 		this.WhereStr=WhereStr;
-		this.Refresh=Refresh;
 		IC = new InternetConnection(this.activity.getApplicationContext());
 		PV = new PublicVariable();
 

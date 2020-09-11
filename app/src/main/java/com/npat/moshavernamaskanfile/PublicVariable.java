@@ -10,4 +10,5 @@ public class PublicVariable {
 	public static final String NAMESPACE = "http://tempuri.org/";
 	public static final String URL = "http://maskan-file.ir/site/MaskanFileWS.asmx";
 	public static final String Recive_NumberPhone = "+981000940000";
+	public static String Content_Files = "";
 }

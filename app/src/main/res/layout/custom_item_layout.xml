@@ -7,7 +7,8 @@
     app:cardElevation="5dp"
     app:cardCornerRadius="10dp"
     android:layout_margin="8dp"
-    android:layoutDirection="rtl">
+    android:layoutDirection="rtl"
+    android:background="@drawable/rounded_custom_item">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +22,7 @@
             android:drawablePadding="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
             android:text="کدفایل"
             android:textSize="16sp" />
         <TextView

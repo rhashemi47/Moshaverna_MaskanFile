@@ -79,8 +79,6 @@ public class Login extends AppCompatActivity {
                 if(db.isOpen()) {
                     db.close();
                 }
-                GetFilesFromWeb getFilesFromWeb=new GetFilesFromWeb(Login.this,"0","100","");
-                getFilesFromWeb.AsyncExecute();
             }
             else
             {
@@ -106,10 +104,5 @@ public class Login extends AppCompatActivity {
                 sendUserNameAndPassword.AsyncExecute();
             }
         });
-    }
-    public void LoadActivity(Class<?> Cls)
-    {
-        Intent intent = new Intent(getApplicationContext(),Cls);
-        this.startActivity(intent);
     }
 }

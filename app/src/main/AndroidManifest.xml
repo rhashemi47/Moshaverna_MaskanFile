@@ -32,6 +32,7 @@
         <activity android:name=".Login" />
         <activity android:name=".MainActivity"/>
         <activity android:name=".Accept_code"/>
+        <activity android:name=".ShowFile"/>
         <receiver android:name="com.npat.moshavernamaskanfile.SMSReseiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
